@@ -1,0 +1,100 @@
+# version: '3.8'
+
+# services:
+#   frontend:
+#     build: 
+#       context: ./Penzi_frontend/penzi-app
+#       dockerfile: Dockerfile 
+#     ports:
+#       - 3000:3000 
+      
+#   backend:
+#     build: ./PenziDatingSMS
+#     restart: always
+#     ports:
+#       - 8000:8000
+#     environment:
+#       DATABASE_URL: mysql+mysqlconnector://root:Waweza123!@db:3306/penzi_application 
+
+#   db:
+#     image: mysql:8.0
+#     ports:
+#       - 3307:3306
+#     environment:
+#       MYSQL_ROOT_PASSWORD: Waweza123!
+#       MYSQL_DATABASE: penzi_application
+  
+ 
+
+version: '3.8'
+
+services:
+  frontend:
+    build: ./Penzi_frontend/penzi-app
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend
+
+  backend:
+    build: ./PenziDatingSMS
+    ports:
+      - "80:80"
+    restart: always
+    depends_on:
+      - db  
+    environment:
+      DATABASE_URL: mysql+pymysql://root:Waweza123!@db:3306/penzi_application
+      MYSQL_ROOT_PASSWORD: Waweza123!
+      MYSQL_DATABASE: penzi_application
+    networks:
+      - backend
+      - frontend
+      
+  db:
+    image: mysql:8.0
+    # env_file: ./PenziDatingSMS/env
+    
+    environment:
+      MYSQL_ROOT_PASSWORD: Waweza123!
+      MYSQL_DATABASE: penzi_application
+    volumes:
+      - mysql-db:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    expose:
+      - "3306"
+    networks:
+      - backend
+volumes:
+  mysql-db:
+
+networks:
+  backend:
+  frontend:
+
+# version: '3.9'
+
+# services:
+#   frontend:
+#     build: ./Penzi_frontend/penzi-app
+#     ports:
+#       - "3000:3000"
+#   backend:
+#     build: ./PenziDatingSMS
+#     ports:
+#       - "8000:8000"
+#     environment:
+#       - DATABASE_URL=mysql+pymysql://root:Waweza123!@db:3306/penzi_application
+#        - MYSQL_ROOT_PASSWORD=Waweza123!
+
+#   db:
+#     image: mysql:8.0
+#     ports:
+#       - "3307:3306"
+
+#     environment:
+#        - MYSQL_ROOT_PASSWORD=Waweza123!
+
+#     expose:
+      # - '3306'   
