@@ -50,9 +50,6 @@ def main_engine(phone_number, message,  db: Session = next(get_db())):
         }
     save_sent_messages(db, received_message=message_sent,)
     
-    if message.startswith('254'):
-        return_message = 'To get started send the word PENZI'
-        return return_message
 
     if message.upper() == 'PENZI':
        user_registration = check_user_registration(phone_number)
@@ -190,7 +187,7 @@ def start(body: Item):
     #     return{"reply": "Error", "status": 1}
        
   
-# print(main_engine('254748804536', "PENZI")) 
+print(main_engine('254748804536', "PENZI")) 
 # print(main_engine('254711113333', "start#Kevin Lucky#25#Male#Nairobi#Karen"))
 # print(main_engine('254748804536', "details#graduate#Aeronautical Engineer#single#christian#Bukusu")) 
 # print(main_engine('254744443333', "MYSELF Cute,loving, caring "))
