@@ -36,6 +36,9 @@ services:
     networks:
       - frontend
 
+    mem_limit: 2g
+    memswap_limit: 2g  
+
   backend:
     build: ./PenziDatingSMS
     ports:
